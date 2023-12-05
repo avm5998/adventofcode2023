@@ -81,29 +81,30 @@ def checkleftp2(i, j, lines):
     k = j-1
     number = 0
     mult_term = 1
+    if k < 0 or not lines[i][k].isdigit():
+        return []
     while k >= 0 and lines[i][k].isdigit():
         number += mult_term*int(lines[i][k])
         mult_term *= 10
         k -= 1
-    if k==j-1: return 0,0
     k += 1
-    return number,1
+    return [number]
 
 
-def checkrightp2(i, j, lines, taken):
+def checkrightp2(i, j, lines):
     k = j+1
-
+    if k == len(lines[0]) or not lines[i][k].isdigit():
+        return []
     number = 0
     n = len(lines[0])
     while k < n and lines[i][k].isdigit():
         number = number*10+int(lines[i][k])
         k += 1
     k -= 1
-    taken.add((i, j+1))
-    return number
+    return [number]
 
 
-def checktopbottomp2(i, j, lines, taken):
+def checktopbottomp2(i, j, lines):
     if i < 0 or i >= len(lines):
         return 0
 
@@ -113,21 +114,19 @@ def checktopbottomp2(i, j, lines, taken):
         while k > 0 and lines[i][k].isdigit():
             k -= 1
         k += 1
-        if (i, k) in taken:
-            return 0
-        taken.add((i, k))
         number = 0
         while k < len(lines[0]) and lines[i][k].isdigit():
             number = number*10+int(lines[i][k])
             k += 1
-        return number
+        return [number]
     else:
         # check for two different numbers together
-        return checkleftp2(i, j, lines, taken)+checkrightp2(i, j, lines, taken)
+        ans = checkleftp2(i, j, lines)
+        ans.extend(checkrightp2(i, j, lines))
+        return ans
+
 
 def part2():
-    taken = set()
-
     with open('data3.txt', 'r') as file:
         lines = file.read().splitlines()
         ans = 0
@@ -137,18 +136,13 @@ def part2():
             for j in range(n):
                 chr = lines[i][j]
                 if chr == '*':
-                    # print(chr)
-                    a = checkleft(i, j, lines, taken)
-                    # print(ans)
-                    b = checkright(i, j, lines, taken)
-                    # print(ans)
-                    c = checktopbottom(i-1, j, lines, taken)
-                    # print(ans)
-                    d = checktopbottom(i+1, j, lines, taken)
-                    # print(ans)
-                    arr=sorted([a,b,c,d])
-                    if arr[2]>0:
-                        ans+=arr[2]*arr[3]
+                    chr = []
+                    chr.extend(checkleftp2(i, j, lines))
+                    chr.extend(checkrightp2(i, j, lines))
+                    chr.extend(checktopbottomp2(i-1, j, lines))
+                    chr.extend(checktopbottomp2(i+1, j, lines))
+                    if len(chr) == 2:
+                        ans += chr[0]*chr[1]
         print(ans)
 
 
