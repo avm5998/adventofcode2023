@@ -56,7 +56,7 @@ def checktopbottom(i, j, lines, taken):
 def part1():
     taken = set()
 
-    with open('data3.txt', 'r') as file:
+    with open('datafiles/data3.txt', 'r') as file:
         lines = file.read().splitlines()
         ans = 0
 
@@ -127,7 +127,7 @@ def checktopbottomp2(i, j, lines):
 
 
 def part2():
-    with open('data3.txt', 'r') as file:
+    with open('datafiles/data3.txt', 'r') as file:
         lines = file.read().splitlines()
         ans = 0
 

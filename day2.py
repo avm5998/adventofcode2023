@@ -1,7 +1,7 @@
 
 
 ans = 0
-with open("data2.txt", "r") as file:
+with open("datafiles/data2.txt", "r") as file:
     lines = file.readlines()
     linenumber = 1
     check = {'red': 12, 'green': 13, 'blue': 14}
@@ -26,7 +26,7 @@ with open("data2.txt", "r") as file:
 
 # part two
 ans = 0
-with open("data2.txt", "r") as file:
+with open("datafiles/data2.txt", "r") as file:
     lines = file.readlines()
     for line in lines:
         r = g = b = 0

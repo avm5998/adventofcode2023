@@ -1,7 +1,7 @@
 
 
 ans = 0
-with open('data1.txt', 'r') as f:
+with open('datafiles/data1.txt', 'r') as f:
     lines = f.readlines()
     first = last = None
     numbers = {'one': 1, 'two': 2, 'three': 3, 'four': 4,
